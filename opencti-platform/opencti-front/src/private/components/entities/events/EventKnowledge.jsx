@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as PropTypes from 'prop-types';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { graphql, createFragmentContainer } from 'react-relay';
 import EntityStixCoreRelationships from '../../common/stix_core_relationships/EntityStixCoreRelationships';
 import StixDomainObjectKnowledge from '../../common/stix_domain_objects/StixDomainObjectKnowledge';
@@ -8,6 +8,7 @@ import StixCoreRelationship from '../../common/stix_core_relationships/StixCoreR
 import EventPopover from './EventPopover';
 import StixDomainObjectHeader from '../../common/stix_domain_objects/StixDomainObjectHeader';
 import StixSightingRelationship from '../../events/stix_sighting_relationships/StixSightingRelationship';
+import withRouter from '../../../../utils/compat-router/withRouter';
 
 class EventKnowledgeComponent extends Component {
   render() {
@@ -20,7 +21,7 @@ class EventKnowledgeComponent extends Component {
           stixDomainObject={event}
           PopoverComponent={<EventPopover />}
         />
-        <Switch>
+        <Routes>
           <Route
             exact
             path="/dashboard/entities/events/:eventId/knowledge/relations/:relationId"
@@ -216,7 +217,7 @@ class EventKnowledgeComponent extends Component {
               />
             )}
           />
-        </Switch>
+        </Routes>
       </>
     );
   }

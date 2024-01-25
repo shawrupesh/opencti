@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { graphql, createFragmentContainer } from 'react-relay';
+import withRouter from '../../../../utils/compat-router/withRouter';
 import StixCoreRelationship from '../../common/stix_core_relationships/StixCoreRelationship';
 import CourseOfActionPopover from './CourseOfActionPopover';
 import StixDomainObjectHeader from '../../common/stix_domain_objects/StixDomainObjectHeader';
@@ -17,7 +18,7 @@ class CourseOfActionKnowledgeComponent extends Component {
           PopoverComponent={<CourseOfActionPopover />}
           isOpenctiAlias={true}
         />
-        <Switch>
+        <Routes>
           <Route
             exact
             path="/dashboard/techniques/courses_of_action/:courseOfActionId/knowledge/relations/:relationId"
@@ -28,7 +29,7 @@ class CourseOfActionKnowledgeComponent extends Component {
               />
             )}
           />
-        </Switch>
+        </Routes>
       </>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Switch, Redirect } from 'react-router-dom';
+import { Redirect, Routes } from 'react-router-dom';
 import { BoundaryRoute } from '../Error';
 import { SETTINGS_SETACCESSES } from '../../../utils/hooks/useGranted';
 import Loader from '../../../components/Loader';
@@ -25,7 +25,7 @@ const RootImport = lazy(() => import('./import/Root'));
 const Root = () => {
   return (
     <Suspense fallback={<Loader />}>
-      <Switch>
+      <Routes>
         <BoundaryRoute
           exact
           path="/dashboard/data"
@@ -136,7 +136,7 @@ const Root = () => {
           path="/dashboard/data/processing/tasks"
           component={Tasks}
         />
-      </Switch>
+      </Routes>
     </Suspense>
   );
 };

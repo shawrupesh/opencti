@@ -27,13 +27,14 @@ import { SYSTEM_USER } from '../../utils/access';
 import { publishUserAction } from '../../listener/UserActionListener';
 import { initializeAuthorizedMembers } from '../workspace/workspace-domain';
 import { ENTITY_TYPE_MARKING_DEFINITION } from '../../schema/stixMetaObject';
-import { getEntitiesMapFromCache } from '../../database/cache';
+import { getEntitiesListFromCache, getEntitiesMapFromCache } from '../../database/cache';
 import type { NumberResult, StoreMarkingDefinition } from '../../types/store';
 import { getWidgetArguments } from './publicDashboard-utils';
 import { stixCoreObjectsDistribution, stixCoreObjectsMultiTimeSeries, stixCoreObjectsNumber, findAll as stixCoreObjects } from '../../domain/stixCoreObject';
 import { ABSTRACT_STIX_CORE_OBJECT } from '../../schema/general';
 import { stixRelationshipsDistribution, stixRelationshipsMultiTimeSeries, stixRelationshipsNumber, findAll as stixRelationships } from '../../domain/stixRelationship';
-import { bookmarks } from '../../domain/user';
+import { bookmarks, computeAvailableMarkings } from '../../domain/user';
+import { getMaxMarkings } from '../../domain/settings';
 
 export const findById = (
   context: AuthContext,
@@ -136,6 +137,16 @@ export const addPublicDashboard = async (
     [{ id: user.id, access_right: 'admin' }, { id: 'ALL', access_right: 'view' }],
     user,
   );
+
+  // check platform data sharing max markings
+  const maxMarkings = await getMaxMarkings(context, user);
+  const allMarkings = await getEntitiesListFromCache<StoreMarkingDefinition>(context, SYSTEM_USER, ENTITY_TYPE_MARKING_DEFINITION);
+  const computedMarkings = computeAvailableMarkings(maxMarkings, allMarkings);
+  const computedMarkingsId = computedMarkings.map((marking) => marking.id);
+  if (input.allowed_markings_ids?.some((id) => !computedMarkingsId.includes(id))) {
+    throw UnsupportedError('Invalid markings');
+  }
+
   // Create publicDashboard
   const publicDashboardToCreate = {
     name: input.name,

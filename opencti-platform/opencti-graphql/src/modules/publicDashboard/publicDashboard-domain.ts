@@ -21,6 +21,8 @@ import type {
   QueryPublicBookmarksArgs,
   QueryPublicStixCoreObjectsArgs,
   QueryPublicStixRelationshipsArgs,
+  StixCoreObjectConnection,
+  StixRelationshipConnection
 } from '../../generated/graphql';
 import { FunctionalError, UnsupportedError } from '../../config/errors';
 import { SYSTEM_USER } from '../../utils/access';
@@ -35,6 +37,7 @@ import { ABSTRACT_STIX_CORE_OBJECT } from '../../schema/general';
 import { stixRelationshipsDistribution, stixRelationshipsMultiTimeSeries, stixRelationshipsNumber, findAll as stixRelationships } from '../../domain/stixRelationship';
 import { bookmarks, computeAvailableMarkings } from '../../domain/user';
 import { getMaxMarkings } from '../../domain/settings';
+import { dayAgo } from '../../utils/format';
 
 export const findById = (
   context: AuthContext,
@@ -308,7 +311,7 @@ export const publicStixCoreObjectsNumber = async (
   const parameters = {
     dateAttribute: selection.date_attribute,
     startDate: args.startDate,
-    endDate: args.endDate,
+    endDate: dayAgo(),
     filters,
     types: [
       ABSTRACT_STIX_CORE_OBJECT,
@@ -330,7 +333,7 @@ export const publicStixRelationshipsNumber = async (
 
   const parameters = {
     startDate: args.startDate,
-    endDate: args.endDate,
+    endDate: dayAgo(),
     filters,
     dateAttribute: selection.date_attribute,
     dynamicFrom: selection.dynamicFrom,
@@ -418,7 +421,7 @@ export const publicBookmarks = async (
 export const publicStixCoreObjects = async (
   context: AuthContext,
   args: QueryPublicStixCoreObjectsArgs
-) => {
+): Promise <Omit<StixCoreObjectConnection, 'edges'>> => {
   const { user, dataSelection } = await getWidgetArguments(context, args.uriKey, args.widgetId);
   context.user = user; // context.user is used in standard api
   const selection = dataSelection[0];
@@ -437,13 +440,13 @@ export const publicStixCoreObjects = async (
   };
 
   // Use standard API
-  return stixCoreObjects(context, user, parameters);
+  return stixCoreObjects(context, user, parameters) as unknown as Promise <Omit<StixCoreObjectConnection, 'edges'>>;
 };
 
 export const publicStixRelationships = async (
   context: AuthContext,
   args: QueryPublicStixRelationshipsArgs
-) => {
+) : Promise <Omit<StixRelationshipConnection, 'edges'>> => {
   const { user, dataSelection } = await getWidgetArguments(context, args.uriKey, args.widgetId);
   context.user = user;
 
@@ -462,6 +465,6 @@ export const publicStixRelationships = async (
   };
 
   // Use standard API
-  return stixRelationships(context, user, parameters);
+  return stixRelationships(context, user, parameters) as unknown as Promise <Omit<StixRelationshipConnection, 'edges'>>;
 };
 // endregion

@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { Promise as BluePromise } from 'bluebird';
 import type { AuthContext, AuthUser } from '../../types/user';
 import { internalLoadById, listEntitiesPaginated, storeLoadById } from '../../database/middleware-loader';
 import { type BasicStoreEntityPublicDashboard, ENTITY_TYPE_PUBLIC_DASHBOARD, type PublicDashboardCached } from './publicDashboard-types';
@@ -32,13 +33,20 @@ import { ENTITY_TYPE_MARKING_DEFINITION } from '../../schema/stixMetaObject';
 import { getEntitiesListFromCache, getEntitiesMapFromCache } from '../../database/cache';
 import type { BasicStoreRelation, NumberResult, StoreMarkingDefinition, StoreRelationConnection } from '../../types/store';
 import { getWidgetArguments } from './publicDashboard-utils';
-import { findAll as stixCoreObjects, stixCoreObjectsDistribution, stixCoreObjectsMultiTimeSeries, stixCoreObjectsNumber } from '../../domain/stixCoreObject';
+import {
+  findAll as stixCoreObjects,
+  stixCoreObjectsDistribution,
+  stixCoreObjectsDistributionByEntity,
+  stixCoreObjectsMultiTimeSeries,
+  stixCoreObjectsNumber
+} from '../../domain/stixCoreObject';
 import { ABSTRACT_STIX_CORE_OBJECT } from '../../schema/general';
 import { findAll as stixRelationships, stixRelationshipsDistribution, stixRelationshipsMultiTimeSeries, stixRelationshipsNumber } from '../../domain/stixRelationship';
 import { bookmarks, computeAvailableMarkings } from '../../domain/user';
 import { getMaxMarkings } from '../../domain/settings';
 import { dayAgo } from '../../utils/format';
 import { isStixCoreObject } from '../../schema/stixCoreObject';
+import { ES_MAX_CONCURRENCY } from '../../database/engine';
 
 export const findById = (
   context: AuthContext,
@@ -404,16 +412,16 @@ export const publicStixRelationshipsDistribution = async (
     return mainDistribution;
   }
 
-  // TODO await BluePromise.map(filteredElementsIds, concurrentUpdate, { concurrency: ES_MAX_CONCURRENCY });
-  return Promise.all(mainDistribution
-    .map(async (distributionItem) => {
+  return BluePromise.map(
+    mainDistribution,
+    async (distributionItem) => {
       if (!isStixCoreObject(distributionItem.entity.entity_type)) {
         return distributionItem;
       }
 
       const breakdownFilters: FilterGroup = {
         filterGroups: breakdownSelection.filters ? [breakdownSelection.filters] : [],
-        filters: [{
+        filters: breakdownSelection.perspective === 'entities' ? [] : [{
           key: ['fromId'],
           values: [distributionItem.entity.id],
           mode: FilterMode.And,
@@ -431,18 +439,39 @@ export const publicStixRelationshipsDistribution = async (
         dynamicFrom: breakdownSelection.dynamicFrom,
         dynamicTo: breakdownSelection.dynamicTo,
         dateAttribute: breakdownSelection.date_attribute,
-        isTo: breakdownSelection.isTo,
-        limit: breakdownSelection.number,
+        limit: breakdownSelection.number ?? 10,
       };
+
+      let breakdownDistribution: any;
+      if (breakdownSelection.perspective === 'entities') {
+        breakdownDistribution = await stixCoreObjectsDistributionByEntity(
+          context,
+          user,
+          {
+            ...breakdownParameters,
+            types: ['Stix-Core-Object'],
+            objectId: distributionItem.entity.id
+          }
+        );
+      } else {
+        breakdownDistribution = await stixRelationshipsDistribution(
+          context,
+          user,
+          {
+            ...breakdownParameters,
+            isTo: breakdownSelection.isTo,
+            fromOrToId: distributionItem.entity.id,
+          }
+        );
+      }
 
       return {
         ...distributionItem,
-        entity: {
-          ...distributionItem.entity,
-          stixRelationshipsDistribution: await stixRelationshipsDistribution(context, user, breakdownParameters),
-        }
+        breakdownDistribution,
       };
-    }));
+    },
+    { concurrency: ES_MAX_CONCURRENCY }
+  );
 };
 
 // bookmarks

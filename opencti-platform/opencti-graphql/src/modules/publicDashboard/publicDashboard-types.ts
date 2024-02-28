@@ -68,6 +68,7 @@ export interface PublicDashboardCachedWidget {
     isTo?: boolean
     number?: boolean
     toTypes?: string[]
+    perspective?: 'entities' | 'relationships' | 'audits' | null
   }[]
 }
 

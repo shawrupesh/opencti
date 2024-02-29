@@ -363,25 +363,70 @@ export const publicStixCoreObjectsDistribution = async (
 ) => {
   const { user, dataSelection } = await getWidgetArguments(context, args.uriKey, args.widgetId);
 
-  const selection = dataSelection[0];
-  const { filters } = selection;
+  const mainSelection = dataSelection[0];
+  const breakdownSelection = dataSelection[1];
+  const { filters: mainFilters } = mainSelection;
 
   const parameters = {
     startDate: args.startDate,
     endDate: args.endDate,
-    filters,
-    toTypes: selection.toTypes,
-    field: selection.attribute,
-    dateAttribute: selection.date_attribute || 'created_at',
+    filters: mainFilters,
+    toTypes: mainSelection.toTypes,
+    field: mainSelection.attribute,
+    dateAttribute: mainSelection.date_attribute || 'created_at',
     operation: 'count',
-    limit: selection.number ?? 10,
+    limit: mainSelection.number ?? 10,
     types: [
       ABSTRACT_STIX_CORE_OBJECT,
     ],
   };
 
   // Use standard API
-  return stixCoreObjectsDistribution(context, user, parameters);
+  const mainDistribution = await stixCoreObjectsDistribution(context, user, parameters);
+  if (!breakdownSelection) {
+    // Stop here if there is no breakdown to make with a second selection.
+    return mainDistribution;
+  }
+
+  return BluePromise.map(
+    mainDistribution,
+    async (distributionItem) => {
+      if (!isStixCoreObject(distributionItem.entity.entity_type)) {
+        return distributionItem;
+      }
+
+      const breakdownFilters: FilterGroup = {
+        filterGroups: breakdownSelection.filters ? [breakdownSelection.filters] : [],
+        filters: [{
+          key: ['fromId'],
+          values: [distributionItem.entity.id],
+          mode: FilterMode.And,
+          operator: FilterOperator.Eq,
+        }],
+        mode: FilterMode.And
+      };
+
+      const breakdownParameters = {
+        startDate: args.startDate,
+        endDate: args.endDate,
+        filters: breakdownFilters,
+        toTypes: breakdownSelection.toTypes,
+        field: breakdownSelection.attribute,
+        dateAttribute: breakdownSelection.date_attribute || 'created_at',
+        operation: 'count',
+        limit: breakdownSelection.number ?? 10,
+        types: [
+          ABSTRACT_STIX_CORE_OBJECT,
+        ],
+      };
+
+      return {
+        ...distributionItem,
+        breakdownDistribution: await stixCoreObjectsDistribution(context, user, breakdownParameters),
+      };
+    },
+    { concurrency: ES_MAX_CONCURRENCY }
+  );
 };
 
 export const publicStixRelationshipsDistribution = async (

@@ -2346,8 +2346,8 @@ const elQueryBodyBuilder = async (context, user, options) => {
     }
   }
   // Handle search
-  const orderConfigration = isEmptyField(orderBy) ? [] : orderBy;
-  const orderCriterion = Array.isArray(orderConfigration) ? orderConfigration : [orderConfigration];
+  const orderConfiguration = isEmptyField(orderBy) ? [] : orderBy;
+  const orderCriterion = Array.isArray(orderConfiguration) ? orderConfiguration : [orderConfiguration];
   let scoreSearchOrder = orderMode;
   if (search !== null && search.length > 0) {
     const shouldSearch = elGenerateFullTextSearchShould(search, options);
@@ -2373,6 +2373,10 @@ const elQueryBodyBuilder = async (context, user, options) => {
       const orderKeyword = isDateOrNumber || orderCriteria.startsWith('_') ? orderCriteria : `${orderCriteria}.keyword`;
       if (orderKeyword === '_score') {
         ordering = R.append({ [orderKeyword]: scoreSearchOrder }, ordering);
+      } else if (orderCriteria === 'group_confidence_level') {
+        // complex object
+        const order = { 'group_confidence_level.max_confidence': { order: orderMode, missing: '_last' } };
+        ordering = R.append(order, ordering);
       } else if (isDateAttribute(orderCriteria)) {
         // sorting on null dates results to an error, one way to fix it is to use missing: 0
         // see https://github.com/elastic/elasticsearch/issues/81960

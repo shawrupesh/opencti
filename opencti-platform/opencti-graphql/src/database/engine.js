@@ -94,7 +94,9 @@ import { getEntitiesListFromCache, getEntityFromCache } from './cache';
 import { ENTITY_TYPE_MIGRATION_STATUS, ENTITY_TYPE_SETTINGS, ENTITY_TYPE_STATUS, ENTITY_TYPE_USER, isInternalObject } from '../schema/internalObject';
 import { telemetry } from '../config/tracing';
 import {
+  getSortByKey,
   isBooleanAttribute,
+  isComplexObjectAttribute,
   isDateAttribute,
   isDateNumericOrBooleanAttribute,
   isNumericAttribute,
@@ -2369,14 +2371,16 @@ const elQueryBodyBuilder = async (context, user, options) => {
   if (isNotEmptyField(orderCriterion)) {
     for (let index = 0; index < orderCriterion.length; index += 1) {
       const orderCriteria = orderCriterion[index];
-      const isDateOrNumber = isDateNumericOrBooleanAttribute(orderCriteria);
-      const orderKeyword = isDateOrNumber || orderCriteria.startsWith('_') ? orderCriteria : `${orderCriteria}.keyword`;
+      let orderKeyword = `${orderCriteria}.keyword`;
+      if (isDateNumericOrBooleanAttribute(orderCriteria) || orderCriteria.startsWith('_')) {
+        orderKeyword = orderCriteria;
+      }
+      if (isComplexObjectAttribute(orderCriteria)) {
+        orderKeyword = getSortByKey(orderCriteria);
+      }
+
       if (orderKeyword === '_score') {
         ordering = R.append({ [orderKeyword]: scoreSearchOrder }, ordering);
-      } else if (orderCriteria === 'group_confidence_level') {
-        // complex object
-        const order = { 'group_confidence_level.max_confidence': { order: orderMode, missing: '_last' } };
-        ordering = R.append(order, ordering);
       } else if (isDateAttribute(orderCriteria)) {
         // sorting on null dates results to an error, one way to fix it is to use missing: 0
         // see https://github.com/elastic/elasticsearch/issues/81960

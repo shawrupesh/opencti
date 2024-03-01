@@ -240,7 +240,7 @@ const internalObjectsAttributes: { [k: string]: Array<AttributeDefinition> } = {
       multiple: false,
       upsert: false,
       isFilterable: false,
-      sortBy: 'group_confidence_level.max_confidence',
+      sortBy: 'max_confidence',
       mappings: [
         { name: 'max_confidence', label: 'Max Confidence', type: 'numeric', precision: 'integer', editDefault: false, mandatoryType: 'internal', multiple: false, upsert: false, isFilterable: true },
         { name: 'overrides',
@@ -303,6 +303,7 @@ const internalObjectsAttributes: { [k: string]: Array<AttributeDefinition> } = {
       multiple: false,
       upsert: false,
       isFilterable: false,
+      sortBy: 'max_confidence',
       mappings: [
         { name: 'max_confidence', label: 'Max Confidence', type: 'numeric', precision: 'integer', editDefault: false, mandatoryType: 'internal', multiple: false, upsert: false, isFilterable: true },
         { name: 'overrides',

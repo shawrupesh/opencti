@@ -96,7 +96,6 @@ import { telemetry } from '../config/tracing';
 import {
   getSortByKey,
   isBooleanAttribute,
-  isComplexObjectAttribute,
   isDateAttribute,
   isDateNumericOrBooleanAttribute,
   isNumericAttribute,
@@ -2375,10 +2374,10 @@ const elQueryBodyBuilder = async (context, user, options) => {
       if (isDateNumericOrBooleanAttribute(orderCriteria) || orderCriteria.startsWith('_')) {
         orderKeyword = orderCriteria;
       }
-      if (isComplexObjectAttribute(orderCriteria)) {
-        orderKeyword = getSortByKey(orderCriteria);
+      const sortByKey = getSortByKey(orderCriteria);
+      if (sortByKey) {
+        orderKeyword = `${orderCriteria}.${sortByKey}`;
       }
-
       if (orderKeyword === '_score') {
         ordering = R.append({ [orderKeyword]: scoreSearchOrder }, ordering);
       } else if (isDateAttribute(orderCriteria)) {

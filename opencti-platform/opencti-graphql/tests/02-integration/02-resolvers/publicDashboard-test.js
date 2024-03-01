@@ -228,6 +228,378 @@ describe('PublicDashboard resolver', () => {
               moved: false,
               static: false
             }
+          },
+          '0a471055-7426-4840-9501-33770b845f92': {
+            id: '0a471055-7426-4840-9501-33770b845f92',
+            type: 'line',
+            perspective: 'entities',
+            dataSelection: [
+              {
+                label: '',
+                attribute: 'entity_type',
+                date_attribute: 'created_at',
+                perspective: 'entities',
+                isTo: true,
+                filters: {
+                  mode: 'and',
+                  filters: [
+                    {
+                      key: [
+                        'entity_type'
+                      ],
+                      values: [
+                        'Administrative-Area'
+                      ],
+                      operator: 'eq',
+                      mode: 'or'
+                    }
+                  ],
+                  filterGroups: [
+
+                  ]
+                },
+                dynamicFrom: {
+                  mode: 'and',
+                  filters: [
+
+                  ],
+                  filterGroups: [
+
+                  ]
+                },
+                dynamicTo: {
+                  mode: 'and',
+                  filters: [
+
+                  ],
+                  filterGroups: [
+
+                  ]
+                }
+              }
+            ],
+            parameters: {
+              title: 'Line entities'
+            },
+            layout: {
+              w: 2,
+              h: 4,
+              x: 0,
+              y: 0,
+              i: '0a471055-7426-4840-9501-33770b845f92',
+              moved: false,
+              static: false
+            }
+          },
+          '9e6afa7e-0db7-424c-8951-16b867245583': {
+            id: '9e6afa7e-0db7-424c-8951-16b867245583',
+            type: 'line',
+            perspective: 'relationships',
+            dataSelection: [
+              {
+                label: '',
+                attribute: 'entity_type',
+                date_attribute: 'created_at',
+                perspective: 'relationships',
+                isTo: true,
+                filters: {
+                  mode: 'and',
+                  filters: [
+                    {
+                      key: [
+                        'relationship_type'
+                      ],
+                      values: [
+                        'targets'
+                      ],
+                      operator: 'eq',
+                      mode: 'or'
+                    }
+                  ],
+                  filterGroups: [
+
+                  ]
+                },
+                dynamicFrom: {
+                  mode: 'and',
+                  filters: [
+
+                  ],
+                  filterGroups: [
+
+                  ]
+                },
+                dynamicTo: {
+                  mode: 'and',
+                  filters: [
+
+                  ],
+                  filterGroups: [
+
+                  ]
+                }
+              }
+            ],
+            parameters: {
+              title: 'Line relationships'
+            },
+            layout: {
+              w: 3,
+              h: 4,
+              x: 2,
+              y: 0,
+              i: '9e6afa7e-0db7-424c-8951-16b867245583',
+              moved: false,
+              static: false
+            }
+          },
+          '9865bec0-d8b1-4592-b14e-0e81e1645f59': {
+            id: '9865bec0-d8b1-4592-b14e-0e81e1645f59',
+            type: 'donut',
+            perspective: 'entities',
+            dataSelection: [
+              {
+                label: 'Area',
+                attribute: 'entity_type',
+                date_attribute: 'created_at',
+                perspective: 'entities',
+                isTo: true,
+                filters: {
+                  mode: 'and',
+                  filters: [
+                    {
+                      key: [
+                        'entity_type'
+                      ],
+                      values: [
+                        'Administrative-Area'
+                      ],
+                      operator: 'eq',
+                      mode: 'or'
+                    }
+                  ],
+                  filterGroups: [
+
+                  ]
+                },
+                dynamicFrom: {
+                  mode: 'and',
+                  filters: [
+
+                  ],
+                  filterGroups: [
+
+                  ]
+                },
+                dynamicTo: {
+                  mode: 'and',
+                  filters: [
+
+                  ],
+                  filterGroups: [
+
+                  ]
+                }
+              }
+            ],
+            parameters: {
+              title: 'Donut entities'
+            },
+            layout: {
+              w: 2,
+              h: 4,
+              x: 6,
+              y: 0,
+              i: '9865bec0-d8b1-4592-b14e-0e81e1645f59',
+              moved: false,
+              static: false
+            }
+          },
+          '2b3c637b-bf25-46ca-8b28-b891d349cc31': {
+            id: '2b3c637b-bf25-46ca-8b28-b891d349cc31',
+            type: 'donut',
+            perspective: 'relationships',
+            dataSelection: [
+              {
+                label: '',
+                attribute: 'entity_type',
+                date_attribute: 'created_at',
+                perspective: 'relationships',
+                isTo: true,
+                filters: {
+                  mode: 'and',
+                  filters: [
+                    {
+                      key: [
+                        'relationship_type'
+                      ],
+                      values: [
+                        'targets'
+                      ],
+                      operator: 'eq',
+                      mode: 'or'
+                    }
+                  ],
+                  filterGroups: [
+
+                  ]
+                },
+                dynamicFrom: {
+                  mode: 'and',
+                  filters: [
+
+                  ],
+                  filterGroups: [
+
+                  ]
+                },
+                dynamicTo: {
+                  mode: 'and',
+                  filters: [
+
+                  ],
+                  filterGroups: [
+
+                  ]
+                }
+              }
+            ],
+            parameters: {
+              title: 'Donut relationships'
+            },
+            layout: {
+              w: 2,
+              h: 4,
+              x: 8,
+              y: 0,
+              i: '2b3c637b-bf25-46ca-8b28-b891d349cc31',
+              moved: false,
+              static: false
+            }
+          },
+          'bec879df-4da2-46c0-994a-e795c1b3a649': {
+            id: 'bec879df-4da2-46c0-994a-e795c1b3a649',
+            type: 'list',
+            perspective: 'entities',
+            dataSelection: [
+              {
+                label: '',
+                attribute: 'entity_type',
+                date_attribute: 'created_at',
+                perspective: 'entities',
+                isTo: true,
+                filters: {
+                  mode: 'and',
+                  filters: [
+                    {
+                      key: [
+                        'entity_type'
+                      ],
+                      values: [
+                        'Administrative-Area'
+                      ],
+                      operator: 'eq',
+                      mode: 'or'
+                    }
+                  ],
+                  filterGroups: [
+
+                  ]
+                },
+                dynamicFrom: {
+                  mode: 'and',
+                  filters: [
+
+                  ],
+                  filterGroups: [
+
+                  ]
+                },
+                dynamicTo: {
+                  mode: 'and',
+                  filters: [
+
+                  ],
+                  filterGroups: [
+
+                  ]
+                }
+              }
+            ],
+            parameters: {
+              title: 'List entities'
+            },
+            layout: {
+              w: 4,
+              h: 2,
+              x: 8,
+              y: 4,
+              i: 'bec879df-4da2-46c0-994a-e795c1b3a649',
+              moved: false,
+              static: false
+            }
+          },
+          '6dbb6564-3e4a-4a28-85b1-e2ac479e38e7': {
+            id: '6dbb6564-3e4a-4a28-85b1-e2ac479e38e7',
+            type: 'list',
+            perspective: 'relationships',
+            dataSelection: [
+              {
+                label: '',
+                attribute: 'entity_type',
+                date_attribute: 'created_at',
+                perspective: 'relationships',
+                isTo: true,
+                filters: {
+                  mode: 'and',
+                  filters: [
+                    {
+                      key: [
+                        'relationship_type'
+                      ],
+                      values: [
+                        'targets'
+                      ],
+                      operator: 'eq',
+                      mode: 'or'
+                    }
+                  ],
+                  filterGroups: [
+
+                  ]
+                },
+                dynamicFrom: {
+                  mode: 'and',
+                  filters: [
+
+                  ],
+                  filterGroups: [
+
+                  ]
+                },
+                dynamicTo: {
+                  mode: 'and',
+                  filters: [
+
+                  ],
+                  filterGroups: [
+
+                  ]
+                }
+              }
+            ],
+            parameters: {
+              title: 'List relationships'
+            },
+            layout: {
+              w: 4,
+              h: 2,
+              x: 8,
+              y: 6,
+              i: '6dbb6564-3e4a-4a28-85b1-e2ac479e38e7',
+              moved: false,
+              static: false
+            }
           }
         },
         config: {
@@ -359,6 +731,7 @@ describe('PublicDashboard resolver', () => {
         let franceId;
         let belgiqueId;
         let vadorFranceId;
+        let magnetoFranceId;
 
         afterAll(async () => {
           // Delete areas.
@@ -468,6 +841,18 @@ describe('PublicDashboard resolver', () => {
             },
           });
           vadorFranceId = vadorFrance.data.stixCoreRelationshipAdd.id;
+
+          const magnetoFrance = await editorQuery({
+            query: ADD_TARGETS_REL,
+            variables: {
+              input: {
+                relationship_type: 'targets',
+                fromId: magnetoId,
+                toId: franceId
+              }
+            },
+          });
+          magnetoFranceId = magnetoFrance.data.stixCoreRelationshipAdd.id;
           // TODO add other rels (and remove them in afterAll)
         });
 
@@ -528,8 +913,215 @@ describe('PublicDashboard resolver', () => {
               widgetId: 'ecb25410-7048-4de7-9288-704e962215f6'
             },
           });
-          console.log(data);
-          // TODO add relations and write expects
+          const { publicStixRelationshipsNumber } = data;
+          expect(publicStixRelationshipsNumber.total).toEqual(2);
+          expect(publicStixRelationshipsNumber.count).toEqual(0);
+        });
+
+        it('should return the data for API: SCO Line', async () => {
+          const API_SCO_LIST_QUERY = gql`
+            query PublicStixCoreObjectsMultiTimeSeries(
+              $startDate: DateTime
+              $endDate: DateTime
+              $uriKey: String!
+              $widgetId : String!
+            ) {
+              publicStixCoreObjectsMultiTimeSeries(
+                startDate: $startDate
+                endDate: $endDate
+                uriKey: $uriKey
+                widgetId : $widgetId
+              ) {
+                data {
+                  date
+                  value
+                }
+              }
+            }
+          `;
+          const { data } = await queryAsAdmin({
+            query: API_SCO_LIST_QUERY,
+            variables: {
+              uriKey: publicDashboardUriKey,
+              widgetId: '0a471055-7426-4840-9501-33770b845f92'
+            },
+          });
+          const { publicStixCoreObjectsMultiTimeSeries } = data;
+          expect(publicStixCoreObjectsMultiTimeSeries[0].data[0].value).toEqual(2);
+        });
+
+        it('should return the data for API: SCR Line', async () => {
+          const API_SCR_LIST_QUERY = gql`
+            query PublicStixRelationshipsMultiTimeSeries(
+              $startDate: DateTime
+              $endDate: DateTime
+              $uriKey: String!
+              $widgetId : String!
+            ) {
+              publicStixRelationshipsMultiTimeSeries(
+                startDate: $startDate
+                endDate: $endDate
+                uriKey: $uriKey
+                widgetId : $widgetId
+              ) {
+                data {
+                  date
+                  value
+                }
+              }
+            }
+          `;
+          const { data } = await queryAsAdmin({
+            query: API_SCR_LIST_QUERY,
+            variables: {
+              uriKey: publicDashboardUriKey,
+              widgetId: '9e6afa7e-0db7-424c-8951-16b867245583'
+            },
+          });
+          const { publicStixRelationshipsMultiTimeSeries } = data;
+          expect(publicStixRelationshipsMultiTimeSeries[0].data[0].value).toEqual(2);
+        });
+
+        it('should return the data for API: SCO Donut', async () => {
+          const API_SCO_DONUT_QUERY = gql`
+            query PublicStixCoreObjectsDistribution(
+              $startDate: DateTime
+              $endDate: DateTime
+              $uriKey: String!
+              $widgetId : String!
+            ) {
+              publicStixCoreObjectsDistribution(
+                startDate: $startDate
+                endDate: $endDate
+                uriKey: $uriKey
+                widgetId : $widgetId
+              ) {
+                label
+                entity {
+                  __typename
+                  }
+                value
+              }
+            }
+          `;
+          const { data } = await queryAsAdmin({
+            query: API_SCO_DONUT_QUERY,
+            variables: {
+              uriKey: publicDashboardUriKey,
+              widgetId: '9865bec0-d8b1-4592-b14e-0e81e1645f59'
+            },
+          });
+          const { publicStixCoreObjectsDistribution } = data;
+          expect(publicStixCoreObjectsDistribution[0].label).toEqual('Administrative-Area');
+          expect(publicStixCoreObjectsDistribution[0].value).toEqual(2);
+        });
+
+        it('should return the data for API: SCR Donut', async () => {
+          const API_SCR_DONUT_QUERY = gql`
+            query PublicStixRelationshipsDistribution(
+              $startDate: DateTime
+              $endDate: DateTime
+              $uriKey: String!
+              $widgetId : String!
+            ) {
+              publicStixRelationshipsDistribution(
+                startDate: $startDate
+                endDate: $endDate
+                uriKey: $uriKey
+                widgetId : $widgetId
+              ) {
+                label
+                entity {
+                  __typename
+                    }
+                value
+              }
+            }
+          `;
+          const { data } = await queryAsAdmin({
+            query: API_SCR_DONUT_QUERY,
+            variables: {
+              uriKey: publicDashboardUriKey,
+              widgetId: '2b3c637b-bf25-46ca-8b28-b891d349cc31'
+            },
+          });
+          const { publicStixRelationshipsDistribution } = data;
+          expect(publicStixRelationshipsDistribution[0].label).toEqual('Administrative-Area');
+          expect(publicStixRelationshipsDistribution[0].value).toEqual(2);
+        });
+
+        it('should return the data for API: SCO List', async () => {
+          const API_SCO_LIST_QUERY = gql`
+            query PublicStixCoreObjects(
+              $startDate: DateTime
+              $endDate: DateTime
+              $uriKey: String!
+              $widgetId : String!
+            ) {
+              publicStixCoreObjects(
+                startDate: $startDate
+                endDate: $endDate
+                uriKey: $uriKey
+                widgetId : $widgetId
+              ) {
+                edges {
+                  node {
+                    entity_type
+                  }
+                }
+                pageInfo {
+                  globalCount
+                }
+              }
+            }
+          `;
+          const { data } = await queryAsAdmin({
+            query: API_SCO_LIST_QUERY,
+            variables: {
+              uriKey: publicDashboardUriKey,
+              widgetId: 'bec879df-4da2-46c0-994a-e795c1b3a649'
+            },
+          });
+          const { publicStixCoreObjects } = data;
+          expect(publicStixCoreObjects.edges[0].node.entity_type).toEqual('Administrative-Area');
+          expect(publicStixCoreObjects.pageInfo.globalCount).toEqual(2);
+        });
+
+        it('should return the data for API: SCR List', async () => {
+          const API_SCR_LIST_QUERY = gql`
+            query PublicStixRelationships(
+              $startDate: DateTime
+              $endDate: DateTime
+              $uriKey: String!
+              $widgetId : String!
+            ) {
+              publicStixRelationships(
+                startDate: $startDate
+                endDate: $endDate
+                uriKey: $uriKey
+                widgetId : $widgetId
+              ) {
+                edges {
+                  node {
+                    relationship_type
+                  }
+                }
+                pageInfo {
+                  globalCount
+                }
+              }
+            }
+          `;
+          const { data } = await queryAsAdmin({
+            query: API_SCR_LIST_QUERY,
+            variables: {
+              uriKey: publicDashboardUriKey,
+              widgetId: '6dbb6564-3e4a-4a28-85b1-e2ac479e38e7'
+            },
+          });
+          const { publicStixRelationships } = data;
+          expect(publicStixRelationships.edges[0].node.relationship_type).toEqual('targets');
+          expect(publicStixRelationships.pageInfo.globalCount).toEqual(2);
         });
 
         // TODO add tests for other APIS

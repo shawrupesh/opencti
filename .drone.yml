@@ -5,12 +5,19 @@ name: opencti-tests
 steps:
   - name: linting
     image: nikolaik/python-nodejs:python3.11-nodejs20-alpine
+    volumes:
+    - name: cache-node-backend
+      path: /drone/src/opencti-platform/opencti-graphql/node_modules
+    - name: cache-node-frontend
+      path: /drone/src/opencti-platform/opencti-front/node_modules
     commands:
       - apk add build-base git libffi-dev cargo
       - cd opencti-platform/opencti-graphql
+      - yarn install
       - yarn check-ts
       - yarn lint
       - cd ../opencti-front
+      - yarn install
       - yarn check-ts
       - yarn lint
 

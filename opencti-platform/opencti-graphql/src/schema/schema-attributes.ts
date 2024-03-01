@@ -213,11 +213,6 @@ export const isObjectFlatAttribute = (k: string): boolean => {
   return definition.type === 'object' && definition.format === 'flat';
 };
 
-export const getSortByKey = (k: string): string | null => {
-  const definition = schemaAttributesDefinition.getAttributeByName(k.split('.')[0]);
-  return definition?.sortBy ?? null;
-};
-
 // -- MULTIPLE --
 
 export const isMultipleAttribute = (entityType: string, k: string): boolean => (

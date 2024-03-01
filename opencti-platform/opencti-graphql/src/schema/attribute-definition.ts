@@ -36,7 +36,6 @@ type BasicDefinition = {
   isFilterable: boolean // If attribute can be used as a filter key in the UI
   editDefault: boolean // TO CHECK ?????
   update?: boolean // If attribute can be updated (null = true)
-  sortBy?: string // specific sortBy key for complex object
 };
 
 type BasicObjectDefinition = BasicDefinition & {
@@ -54,7 +53,7 @@ export type EnumAttribute = { type: 'string', format: 'enum', values: string[] }
 export type VocabAttribute = { type: 'string', format: 'vocabulary', vocabularyCategory: string } & BasicDefinition;
 export type JsonAttribute = { type: 'string', format: 'json', multiple: false, schemaDef?: Record<string, any> } & BasicDefinition;
 export type FlatObjectAttribute = { type: 'object', format: 'flat' } & BasicDefinition;
-export type ObjectAttribute = { type: 'object', format: 'standard' } & BasicObjectDefinition;
+export type ObjectAttribute = { type: 'object', format: 'standard', sortBy?: string } & BasicObjectDefinition;
 export type NestedObjectAttribute = { type: 'object', format: 'nested' } & BasicObjectDefinition;
 export type RefAttribute = { type: 'ref', databaseName: string, stixName: string, isRefExistingForTypes: Checker, datable?: boolean, toTypes: string[] } & BasicDefinition;
 export type StringAttribute = IdAttribute | TextAttribute | EnumAttribute | VocabAttribute | JsonAttribute;
